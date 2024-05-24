@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Monogame_3_assingment
 {
@@ -11,12 +12,13 @@ namespace Monogame_3_assingment
             Intro,
             MainAnimation
         }
+        Random genorator;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        Texture2D greyTribble, backgroundIntroTexture;
+        Texture2D greyTribble, brownTribble, OrangeTribble, whiteTribble, backgroundIntroTexture;
         Rectangle window;
-        Rectangle greyTribbleRect, brownTribbleRect, whiteTribbleRect;
-        Vector2 greyTribbleSpeed, brownTribbleSpeed, whiteTribbleSpeed;
+        Rectangle greyTribbleRect, brownTribbleRect, whiteTribbleRect, OrangeTribbleRect;
+        Vector2 greyTribbleSpeed, brownTribbleSpeed, whiteTribbleSpeed, OrangeTribbleSpeed;
         MouseState mouseState;
         Screen screen;
         public Game1()
@@ -29,12 +31,19 @@ namespace Monogame_3_assingment
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            genorator = new Random();
             window = new Rectangle(0, 0, 800, 600);
             _graphics.PreferredBackBufferWidth = window.Width;
             _graphics.PreferredBackBufferHeight = window.Height;
             _graphics.ApplyChanges();
-            greyTribbleRect = new Rectangle(300, 10, 100, 100);
+            greyTribbleRect = new Rectangle(genorator.Next(0,700), genorator.Next(0, 500), 100, 100);
             greyTribbleSpeed = new Vector2(1, 1);
+            brownTribbleRect = new Rectangle(genorator.Next(0, 700), genorator.Next(0, 500), 100, 100);
+            brownTribbleSpeed = new Vector2(1, 0);
+            OrangeTribbleRect = new Rectangle(genorator.Next(0, 700), genorator.Next(0, 500), 100, 100);
+            OrangeTribbleSpeed = new Vector2(0, 1);
+            whiteTribbleRect = new Rectangle(genorator.Next(0, 700), genorator.Next(0, 500), 100, 100);
+            whiteTribbleSpeed = new Vector2(2, 1);
             base.Initialize();
         }
 
@@ -42,6 +51,9 @@ namespace Monogame_3_assingment
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             greyTribble = Content.Load<Texture2D>("tribbleGrey");
+            whiteTribble = Content.Load<Texture2D>("tribbleCream");
+            brownTribble = Content.Load<Texture2D>("tribbleBrown");
+            OrangeTribble = Content.Load<Texture2D>("tribbleOrange");
             backgroundIntroTexture = Content.Load<Texture2D>("Untitled");
             // TODO: use this.Content to load your game content here
         }
@@ -62,6 +74,12 @@ namespace Monogame_3_assingment
             {
                 greyTribbleRect.X += (int)greyTribbleSpeed.X;
                 greyTribbleRect.Y += (int)greyTribbleSpeed.Y;
+                brownTribbleRect.X += (int)brownTribbleSpeed.X;
+                brownTribbleRect.Y += (int)brownTribbleSpeed.Y;
+                OrangeTribbleRect.X += (int)OrangeTribbleSpeed.X;
+                OrangeTribbleRect.Y += (int)OrangeTribbleSpeed.Y;
+                whiteTribbleRect.X += (int)whiteTribbleSpeed.X;
+                whiteTribbleRect.Y += (int)whiteTribbleSpeed.Y;
                 base.Update(gameTime);
                 if (greyTribbleRect.Right > window.Width || greyTribbleRect.Left < 0)
                 {
@@ -71,6 +89,32 @@ namespace Monogame_3_assingment
                 {
                     greyTribbleSpeed.Y = greyTribbleSpeed.Y * -1;
                 }
+                if (brownTribbleRect.Right > window.Width || brownTribbleRect.Left < 0)
+                {
+                    brownTribbleSpeed.X = brownTribbleSpeed.X * -1;
+                }
+                if (brownTribbleRect.Bottom > window.Height || brownTribbleRect.Top < 0)
+                {
+                    brownTribbleSpeed.Y = brownTribbleSpeed.Y * -1;
+                }
+                if (whiteTribbleRect.Right > window.Width || whiteTribbleRect.Left < 0)
+                {
+                    whiteTribbleSpeed.X = whiteTribbleSpeed.X * -1;
+                }
+                if (whiteTribbleRect.Bottom > window.Height || whiteTribbleRect.Top < 0)
+                {
+                    whiteTribbleSpeed.Y = whiteTribbleSpeed.Y * -1;
+                }
+                if (OrangeTribbleRect.Bottom > window.Height || OrangeTribbleRect.Top < 0)
+                {
+                    OrangeTribbleSpeed.Y = OrangeTribbleSpeed.Y * -1;
+                }
+                if (OrangeTribbleRect.Right > window.Width || OrangeTribbleRect.Left < 0)
+                {
+                    OrangeTribbleSpeed.X = OrangeTribbleSpeed.X * -1;
+                }
+                
+
             }
             // TODO: Add your update logic here
 
@@ -98,6 +142,9 @@ namespace Monogame_3_assingment
             if (screen == Screen.MainAnimation)
             {
                 _spriteBatch.Draw(greyTribble, greyTribbleRect, Color.White);
+                _spriteBatch.Draw(brownTribble, brownTribbleRect, Color.White);
+                _spriteBatch.Draw(OrangeTribble, OrangeTribbleRect, Color.White);
+                _spriteBatch.Draw(whiteTribble, whiteTribbleRect, Color.White);
             }
 
             _spriteBatch.End();
