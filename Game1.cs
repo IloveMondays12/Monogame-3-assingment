@@ -125,14 +125,7 @@ namespace Monogame_3_assingment
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightPink);
-            if ((greyTribbleSpeed.Y*greyTribbleSpeed.X) == 1)
-            {
-                GraphicsDevice.Clear(Color.LightPink);
-            }
-            else
-            {
-                GraphicsDevice.Clear(Color.Red);
-            }
+            
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             if (screen == Screen.Intro)
@@ -142,9 +135,24 @@ namespace Monogame_3_assingment
             if (screen == Screen.MainAnimation)
             {
                 _spriteBatch.Draw(greyTribble, greyTribbleRect, Color.White);
-                _spriteBatch.Draw(brownTribble, brownTribbleRect, Color.White);
                 _spriteBatch.Draw(OrangeTribble, OrangeTribbleRect, Color.White);
                 _spriteBatch.Draw(whiteTribble, whiteTribbleRect, Color.White);
+                if ((greyTribbleSpeed.Y * greyTribbleSpeed.X) == 1)
+                {
+                    GraphicsDevice.Clear(Color.LightPink);
+                }
+                else
+                {
+                    GraphicsDevice.Clear(Color.Red);
+                }
+                if ((brownTribbleSpeed.X) == 1)
+                {
+                    _spriteBatch.Draw(brownTribble, brownTribbleRect, Color.White);
+                }
+                else
+                {
+                    _spriteBatch.Draw(brownTribble, brownTribbleRect, Color.Black);
+                }
             }
 
             _spriteBatch.End();
